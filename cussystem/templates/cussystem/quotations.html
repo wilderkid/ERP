@@ -1,0 +1,68 @@
+{% extends "cussystem/father.html" %} 
+{% block title %}所有报价{% endblock%}
+{% block css %}
+    <style type="text/css">
+        td#showqas {
+            background: #cedb63;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+   
+
+     <table>
+
+            <thead>
+                <th>所属客户</th>
+                <th>Gerber名</th>
+                <th>报价时间</th>
+                <th>单板长(mm)</th>
+                <th>单板宽(mm)</th>
+                <th>拼版数</th>
+                <th>拼版长(mm)</th>
+                <th>拼版宽(mm)</th>
+                <th>拼版面积(㎡)</th>
+                <th>平均面积(㎡)</th>
+                <th>数量</th>
+                <th>总面积(㎡)</th>
+                <th>基价(RMB)</th>
+                <th>单价(RMB)</th>
+                <th>单价(USD)</th>
+                <th>测试费(USD)</th>
+                <th>总价(USD)</th>
+                <th>板子规格</th>
+                <th>备注</th>
+            </thead>
+            {% for q in quotations %}
+            <tr>
+            <td>{{ q.customer.cus_id }}</td>
+            <td>{{ q.part_name }}</td>
+            <td>{{ q.quotetime }}</td>
+            <td>{{ q.single_length }}</td>
+            <td>{{ q.single_width }}</td>
+            <td>{{ q.number_up }}</td>
+            <td>{{ q.panel_length }}</td>
+            <td>{{ q.panel_width }}</td>
+            <td>{{ q.panel_size }}</td>
+            <td>{{ q.average_size }}</td>
+            <td>{{ q.quantity }}</td>
+            <td id="showqas">{{ q.amount_size }}</td>
+            <td>{{ q.basic_price }}</td>
+            <td>{{ q.RMB_price|floatformat:3 }}</td>
+            <td>{{ q.USD_price|floatformat:3 }}</td>
+            <td>{{ q.testing_fee }}</td>
+            <td>{{ q.amount }}</td>
+            <td>{{ q.material}},{{q.layer}}层板,{{q.finish_copper}}oz,{{q.thickness}}mm,{{q.solder}},{{q.silkscreen}},{{q.finish}}</td>
+            <td>{{ q.addings }}</td>
+        </tr>
+
+        {% endfor %}
+
+        </table>
+        
+    
+
+{% endblock %}

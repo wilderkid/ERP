@@ -1,0 +1,324 @@
+{% extends "cussystem/father.html" %} 
+{% block title %} 每周询盘 {% endblock %}
+{% block content %}
+
+	<div class="container">
+		
+	
+
+	<h1>每周客户列表</h1>
+	<br/>
+
+	<div id="toolbar">
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addwc"> 添加客户 </button>
+		<button type="button" class="btn btn-primary btn-sm" id="adtomainc"> 加入主要客户 </button>
+	</div>
+
+	<br/>
+
+	<table>
+		<thead>
+			<th>选择</th>
+			<th>客户编码</th>
+			<th>创建时间</th>
+			<th>询盘时间</th>
+			<th>客户名</th>
+			<th>国家</th>
+			<th>来源</th>
+			<th>邮箱</th>
+			<th>公司</th>
+			<th>网址</th>
+			<th>客户类型</th>
+			<th>客户等级</th>
+			<th>跟进平台</th>
+			<th>电话</th>
+			<th>操作</th>
+			{% if msg%} {{ msg }} {% endif%}
+		</thead>
+
+		{% for  c in weekcus %}
+
+		<tr>
+			<td><input type="checkbox" class="checkone" name="check" value="{{ c.cus_id }}"></td>
+			<td>{{c.cus_id}}</td>
+			<td>{{c.createtime}}</td>
+			<td>{{c.inquirytime}}</td>
+			<td>{{c.cname}}</td>
+			<td>{{c.ccountry}}</td>
+			<td>{{c.cfrom}}</td>
+			<td>{{c.cemail}}</td>
+			<td>{{c.ccompany}}</td>
+			<td>{{c.cwebsite}}</td>
+			<td>{{c.ctype}}</td>
+			<td>{{c.cgrade}}</td>
+			<td>{{c.cplateform}}</td>
+			<td>{{c.cphone}}</td>
+			<td>
+				<form method="post" action="{% url 'cussystem:deleteswc' %}">
+					{% csrf_token %}
+					<input type="text" name="cus_id" value={{c.cus_id}} readonly hidden>
+					<!-- <button type="submit">加入废弃池</button> -->
+					<button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addwc"> 删除 </button>
+					<a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#{{c.cus_id}}" aria-expanded="false" aria-controls="collapseExample">编辑</a>
+				</form>
+				
+			</td>
+			
+		</tr>
+		<tr>
+			<td colspan='14'>
+				<div class="collapse" id={{c.cus_id}}>
+				  <div class="well">
+				    <form class="form-horizontal" method="post" action="{% url 'cussystem:editwc'%}">
+						{% csrf_token %}
+						
+						<div class="form-group" hidden>
+							<div class="col-sm-10">
+								<label for="inputEmail3" class="col-sm-2 control-label">客户编码</label>
+								<input type="text" id="cus_id1" name= "cus_id1" placeholder="客户编码" value={{c.cus_id}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="cus_id2" class="col-sm-2 control-label">客户编码</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cus_id2" name= "cus_id2" placeholder="客户编码" value={{c.cus_id}} readonly>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="cname" class="col-sm-2 control-label">客户名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cname" name= "cname" placeholder="客户名" value={{c.cname}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="cinquirytime" class="col-sm-2 control-label">询盘时间</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cinquirytime" name= "cinquirytime" placeholder="询盘时间" value={{c.inquirytime}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">国家</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ccountry" name= "ccountry" placeholder="国家" value={{c.ccountry}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">来源</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cfrom" name= "cfrom" placeholder="来源" value={{c.cfrom}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="cemail" name= "cemail" placeholder="邮箱" value={{c.cemail}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">公司</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ccompany" name= "ccompany" placeholder="公司" value={{c.ccompany}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">网址</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cwebsite" name= "cwebsite" placeholder="网址" value={{c.cwebsite}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户类型</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ctype" name= "ctype" placeholder="客户类型" value={{c.ctype}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户等级</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cgrade" name= "cgrade" placeholder="客户等级" value={{c.cgrade}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">跟进平台</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cplateform" name= "cplateform" placeholder="跟进平台" value={{c.cplateform}}>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">电话</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cphone" name= "cphone" placeholder="电话" value={{c.cphone}}>
+							</div>
+						</div>
+
+						
+						<div class="form-group" style="float:left; float:top;margin-left:84%;">
+							<div class="col-sm-offset-10 col-sm-10">
+								<button type="submit" class="btn btn-default" id="confirmewc">确认</button>
+							</div>
+						</div>
+						<br>
+
+					</form>
+				  </div>
+				</div>
+			</td>	
+		</tr>
+		
+		{% endfor %}
+
+	</table>
+
+	
+	<div id="unseen">
+
+		<!-- Modal  添加客户的模态框-->
+		<div class="modal fade" id="addwc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false"data-backdrop="static">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">添加客户</h4>
+					</div>
+				<div class="modal-body">
+
+					<form class="form-horizontal" method="post" action="{% url 'cussystem:addwc'%}">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户编码</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cus_id" name= "cus_id" placeholder="客户编码">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cname" name= "cname" placeholder="客户名">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">国家</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ccountry" name= "ccountry" placeholder="国家">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">来源</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cfrom" name= "cfrom" placeholder="来源">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="cemail" name= "cemail" placeholder="邮箱">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">公司</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ccompany" name= "ccompany" placeholder="公司">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">网址</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cwebsite" name= "cwebsite" placeholder="网址">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户类型</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="ctype" name= "ctype" placeholder="客户类型">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">客户等级</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cgrade" name= "cgrade" placeholder="客户等级">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">跟进平台</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cplateform" name= "cplateform" placeholder="跟进平台">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">电话</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="cphone" name= "cphone" placeholder="电话">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-sm-offset-10 col-sm-10">
+								<button type="submit" class="btn btn-default">确认</button>
+							</div>
+						</div>
+
+					</form>
+
+
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#adtomainc").click(function(){
+				var ids = []
+				
+				$.each($('.checkOne:checked'),function () {
+					var cus_id = $(this).attr("value");
+					ids.push(cus_id);
+
+				});
+				// alert(ids);
+
+				$.post("{% url 'cussystem:addtomainc' %}", JSON.stringify({ids:ids}),function(data, status){
+					if(data.addedcusids.length != 0){
+						if(data.addsuccess.length == 0){
+							alert(data.addedcusids+"已经添加,不再添加");
+						}else{
+							alert(data.addedcusids+"已经添加,不再添加"+";"+data.addsuccess+data.msg);
+						}
+					}else if(data.addedcusids.length == 0){
+						alert(data.addsuccess+data.msg);
+					}
+					
+				});		
+			});
+		});
+	</script>
+{% endblock %}

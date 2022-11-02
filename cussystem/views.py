@@ -247,8 +247,13 @@ def addquote(request):
 	return render(request, "cussystem/maincus.html", {"maincus":MainCus.objects.all()})
 
 
-def orders(request):
-	pass
+# 展示所有的订单
+class OrdersView(generic.ListView):
+	template_name = 'cussystem/orders.html'
+	context_object_name = 'orders'
+
+	def get_orderset(self):
+		return Orders.objects.all()
 
 @csrf_exempt
 def get_quotes(request):

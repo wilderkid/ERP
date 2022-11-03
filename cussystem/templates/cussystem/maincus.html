@@ -45,16 +45,7 @@
 			<td>{{c.cgrade}}</td>
 			<td>{{c.cplateform}}</td>
 			<td>{{c.cphone}}</td>
-			<td>
-				{% if confirminfo %}
-				<a role="button" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="tshowq" name="{{c.cus_id}}">{{c.quotations_set.count}}</a>
-
-				{% else %}
-
-				<a role="button" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="tshowq" name="{{c.cus_id}}">{{c.quotations_set.count}}</a>
-				{% endif %}
-
-			</td>
+			<td><a name= value="{{c.cus_id}}">{{c.quotations_set.count}}</a></td>
 			<td>{{c.corders}}</td>
 			<td>
 				<form method="post" action="{% url 'cussystem:deletemcs' %}">
